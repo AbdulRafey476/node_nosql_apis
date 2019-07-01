@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/AbdulRafey476/node_nosql_apis/issues"
   },
-  "homepage": "https://github.com/AbdulRafey476/node_nosql_apis#readme"
+  "homepage": "https://github.com/AbdulRafey476/node_nosql_apis#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
