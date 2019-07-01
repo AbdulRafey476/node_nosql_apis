@@ -1,0 +1,21 @@
+{
+  "name": "node_nosql_apis",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AbdulRafey476/node_nosql_apis.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AbdulRafey476/node_nosql_apis/issues"
+  },
+  "homepage": "https://github.com/AbdulRafey476/node_nosql_apis#readme"
+}
