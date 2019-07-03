@@ -1,5 +1,5 @@
 const error = (err, req, res, next) => {
-    console.log(err);
+    console.error(err);
     res.status(500).send('Internal server error.')        
 }
 
