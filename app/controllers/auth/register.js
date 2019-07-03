@@ -9,7 +9,7 @@ const register = async (req, res) => {
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
-    let user = await User.findOne({ email });
+    let user = await User.findne({ email });
     if (user) return res.status(400).send('User already registered.');
 
     user = new User({ name, email, password });
