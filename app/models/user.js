@@ -23,7 +23,8 @@ const userSchema = new db.Schema({
   },
   role: { type: String, default: "user" },
   verified: { type: Boolean, default: false },
-  token: { type: String, required: true }
+  token: { type: String, required: true },
+  validity: { type: Boolean, required: true }
 });
 
 userSchema.methods.generateAuthToken = function() {

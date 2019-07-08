@@ -18,6 +18,7 @@ const register = async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
   user.token = token();
+  user.validity = true;
   await user.save();
 
   const link = `${req.protocol}://${req.headers.host}/api/verification/${

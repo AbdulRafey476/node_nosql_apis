@@ -16,9 +16,10 @@ const verification = async (req, res) => {
     return res.status(400).send("Invalid token or expired.");
 
   user.verified = true;
+  user.validity = false;
   await user.save();
 
-  res.send(true);
+  res.send("Your email is verified");
 };
 
 module.exports = verification;

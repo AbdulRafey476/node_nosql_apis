@@ -14,6 +14,9 @@ const login = async (req, res) => {
   const validPassword = await bcrypt.compare(password, user.password);
   if (!validPassword) return res.status(400).send("Invalid email or password.");
 
+  if (!user.verified)
+    return res.status(400).send("Please verify your email address.");
+
   const authToken = user.generateAuthToken();
   res.send(authToken);
 };
