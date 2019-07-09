@@ -19,6 +19,7 @@ const forgot = async (req, res) => {
 
   user.token = token();
   user.validity = true;
+
   await user.save();
 
   const link = `${req.protocol}://${req.headers.host}/api/password/reset/${

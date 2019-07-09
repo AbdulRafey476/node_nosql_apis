@@ -17,6 +17,7 @@ const verification = async (req, res) => {
 
   user.verified = true;
   user.validity = false;
+
   await user.save();
 
   res.send("Your email is verified");

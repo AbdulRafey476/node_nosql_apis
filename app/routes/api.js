@@ -21,7 +21,7 @@ router.get("/verification/:uid/:token", verification);
 router.post("/forgot", forgot);
 router.post("/password/reset/:uid/:token", reset);
 
-// router.get("/demo", [auth, verified], (req, res) => {
+// router.get("/demo", [auth, verified, admin], (req, res) => {
 //   res.send("/demo");
 // });
 

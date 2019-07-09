@@ -23,7 +23,9 @@ const reset = async (req, res) => {
 
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(password, salt);
+
   user.validity = false;
+
   await user.save();
 
   res.send("Successfully reset the password");
