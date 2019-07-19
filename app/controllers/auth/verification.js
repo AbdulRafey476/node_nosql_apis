@@ -1,13 +1,13 @@
 const { User } = require("../../models/user");
+const ObjectId = require("mongoose").Types.ObjectId;
 
 const verification = async (req, res) => {
   const { uid, token } = req.params;
 
-  try {
-    var user = await User.findById(uid).select("-password");
-  } catch (ex) {
-    return res.status(400).send("Invalid token or expired.");
-  }
+  if (!ObjectId.isValid(uid))
+    return res.status(400).send("Invalid token or expired");
+
+  let user = await User.findById(uid).select("-password");
 
   if (user.verified)
     return res.status(200).send("You already verified your email");

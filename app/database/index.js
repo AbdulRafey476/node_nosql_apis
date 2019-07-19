@@ -9,6 +9,4 @@ mongoose.connect(
     }
 );
 
-mongoose.set('useCreateIndex', true);
-
 module.exports = mongoose

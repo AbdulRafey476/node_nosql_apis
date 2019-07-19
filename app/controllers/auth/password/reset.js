@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const Joi = require("joi");
 const { User } = require("../../../models/user");
+const ObjectId = require("mongoose").Types.ObjectId;
 
 const reset = async (req, res) => {
   const { uid, token } = req.params;
@@ -10,12 +11,10 @@ const reset = async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  try {
-    var user = await User.findById(uid).select("-password");
-  } catch (ex) {
-    return res.status(400).send("Invalid token or expired.");
-  }
+  if (!ObjectId.isValid(uid))
+    return res.status(400).send("Invalid token or expired");
 
+  const user = await User.findById(uid).select("-password");
   if (!user.validity) return res.status(400).send("Invalid token or expired.");
 
   if (user.token !== token)
