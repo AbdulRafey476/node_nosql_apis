@@ -11,7 +11,7 @@ const store = {
     if (error) return res.status(400).send(error.details[0].message);
 
     let store = await Store.findOne({ name });
-    if (store) return res.status(400).send("Store already created.");
+    if (store) return res.status(409).send("Store already exists.");
 
     store = new Store({ name, description, category, image, url });
     await store.save();
@@ -30,9 +30,10 @@ const store = {
   // Get store by id
   getById: async (req, res) => {
     if (!ObjectId.isValid(req.params.id))
-      return res.status(400).send("Invalid id");
+      return res.status(400).send("Invalid store");
 
     let store = await Store.findById({ _id: req.params.id });
+    if (!store) return res.status(400).send("No store found.");
 
     res.send(store);
   },
@@ -40,9 +41,10 @@ const store = {
   // Update store
   update: async (req, res) => {
     if (!ObjectId.isValid(req.params.id))
-      return res.status(400).send("Invalid id");
-
+      return res.status(400).send("Invalid store");
+    
     let store = await Store.findById({ _id: req.params.id });
+    if (!store) return res.status(400).send("No store found.");
 
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -56,19 +58,23 @@ const store = {
     store.image = image;
     store.url = url;
 
-    await store.save();
+    try {
+      await store.save();
+    } catch (ex) {
+      res.status(409).send("Store already exists");
+    }
     res.send(store);
   },
 
   // Delete store
   delete: async (req, res) => {
     if (!ObjectId.isValid(req.params.id))
-      return res.status(400).send("Invalid id");
+      return res.status(400).send("Invalid store");
 
     let store = await Store.deleteOne({ _id: req.params.id });
     if (store.deletedCount) return res.send("Successfully deleted.");
 
-    res.send("Already deleted.");
+    res.send("No store found.");
   }
 };
 
