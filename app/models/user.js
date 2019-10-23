@@ -21,16 +21,15 @@ const userSchema = new db.Schema({
     minlength: 5,
     maxlength: 1024
   },
-  role: { type: String, default: "subscriber" },
+  role: { type: String, default: "visitor" },
   verified: { type: Boolean, default: false },
   token: { type: String, required: true },
   validity: { type: Boolean, required: true }
 });
 
 userSchema.methods.generateAuthToken = function() {
-  const token = jwt.sign({ _id: this._id }, process.env.JWTPRIVATEKEY, {
-    expiresIn: "1d"
-  });
+  const token = jwt.sign({ _id: this._id }, process.env.JWTPRIVATEKEY, { expiresIn: "24h" });
+
   return token;
 };
 

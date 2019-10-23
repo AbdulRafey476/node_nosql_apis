@@ -8,28 +8,24 @@ const forgot = async (req, res) => {
   const { email } = req.body;
 
   const { error } = validate(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) return res.status(400).json({ success: false, message: error.details[0].message });
 
   let user = await User.findOne({ email });
-  if (!user)
-    return res.status(400).send("User does not exist with that email.");
+  if (!user) return res.status(400).json({ success: false, message: "User does not exist with that email." });
 
-  if (!user.verified)
-    return res.status(400).send("Please verify your email address");
+  if (!user.verified) return res.status(400).json({ success: false, message: "Please verify your email address" });
 
   user.token = token();
   user.validity = true;
 
   await user.save();
 
-  const link = `${req.protocol}://${req.headers.host}/api/password/reset/${
-    user._id
-  }/${user.token}`;
+  const link = `${req.protocol}://${req.headers.host}/api/password/reset/${user._id}/${user.token}`;
 
   const mailObj = _.assign({ type: "reset", link }, user);
   await mail(mailObj);
 
-  res.send("A reset link send to your email address.");
+  res.json({ success: true, message: "A reset link send to your email address." });
 };
 
 const validate = req => {

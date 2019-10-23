@@ -15,9 +15,7 @@ const logging = () => {
 
   winston.add(
     new winston.transports.MongoDB({
-      db: `mongodb://${process.env.DATABASE_USER}:${
-        process.env.DATABASE_PASS
-      }@ds345587.mlab.com:45587/${process.env.DATABASE}`,
+      db: `mongodb://${process.env.DATABASE_USER}:${process.env.DATABASE_PASS}@ds345587.mlab.com:45587/${process.env.DATABASE}`,
       level: "info"
     })
   );

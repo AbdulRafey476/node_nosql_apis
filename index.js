@@ -10,6 +10,4 @@ const api = require("./app/routes/api");
 app.use("/api", api);
 app.use(error);
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server started on port ${process.env.PORT}`);
-});
+app.listen(process.env.PORT, () => console.log(`HIT: http://localhost:${process.env.PORT}/api/register`));

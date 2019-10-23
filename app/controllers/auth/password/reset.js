@@ -9,16 +9,14 @@ const reset = async (req, res) => {
   const { password } = req.body;
 
   const { error } = validate(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) return res.status(400).json({ success: false, message: error.details[0].message });
 
-  if (!ObjectId.isValid(uid))
-    return res.status(400).send("Invalid token or expired");
+  if (!ObjectId.isValid(uid)) return res.status(400).json({ success: false, message: "Invalid token or expired" });
 
   const user = await User.findById(uid).select("-password");
-  if (!user.validity) return res.status(400).send("Invalid token or expired.");
+  if (!user.validity) return res.status(400).json({ success: false, message: "Invalid token or expired." });
 
-  if (user.token !== token)
-    return res.status(400).send("Invalid token or expired.");
+  if (user.token !== token) return res.status(400).json({ success: false, message: "Invalid token or expired." });
 
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(password, salt);
@@ -27,7 +25,7 @@ const reset = async (req, res) => {
 
   await user.save();
 
-  res.send("Successfully reset the password");
+  res.json({ success: true, message: "Successfully reset the password" });
 };
 
 const validate = req => {
